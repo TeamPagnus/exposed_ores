@@ -17,13 +17,15 @@ repositories {
 
 // Bukkit libraries needed for building the Plugin
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile 'org.bukkit:bukkit:1.12.2-R0.1-SNAPSHOT'
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+    implementation 'org.bukkit:bukkit:1.12.2-R0.1-SNAPSHOT'
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens
 
 processResources {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
     from(sourceSets.main.resources.srcDirs) {
         filter ReplaceTokens, tokens: [version: version]
     }
