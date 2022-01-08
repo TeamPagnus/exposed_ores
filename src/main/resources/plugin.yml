@@ -1,10 +1,6 @@
-name: DemoPlugin
-version: @version@
-main: at.coderdojo.demoplugin.Demoplugin
-load: STARTUP
-authors: [Minecraft, Mastercoders]
-description: Beispielplugin zum erstellen eines neuen Items
-website: https://coderdojo-linz.github.io/
+name: Exposed_ores
+main: com.gmail.teampagnus.exposed_ores.Exposed_ores
+version: 0.1
 commands:
   sayhello:
     description: Says hello

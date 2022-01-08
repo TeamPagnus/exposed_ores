@@ -1,15 +1,10 @@
-package at.coderdojo.demoplugin;
+package com.gmail.teampagnus.exposed_ores;
 
-// import org.bukkit.Material;
-// import org.bukkit.command.CommandExecutor;
-// import org.bukkit.event.Listener;
-// import org.bukkit.inventory.ItemStack;
-// import org.bukkit.inventory.Recipe;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class DemoPlugin extends JavaPlugin {
+public final class Exposed_ores extends JavaPlugin {
     @Override
     public void onEnable() {
         getCommand("sayhello").setExecutor((sender, command, label, args) -> SayHelloCommand(sender, command, label, args));
@@ -19,5 +14,4 @@ public final class DemoPlugin extends JavaPlugin {
         sender.sendMessage("Oh - Hallo aoeusnth \"" + sender.getName() + "\"");
         return true;
     }
-    
 }
