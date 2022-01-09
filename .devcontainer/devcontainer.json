@@ -1,0 +1,17 @@
+{
+    "build":{
+        "dockerfile": "Dockerfile"
+    },
+    "extensions": [
+        "naco-siren.gradle-language",
+        "vscjava.vscode-java-pack",
+        "redhat.java",
+        "vscjava.vscode-java-test",
+        "vscjava.vscode-maven",
+        "visualstudioexptteam.vscodeintellicode",
+        "mutantdino.resourcemonitor"
+    ],
+    "forwardPorts": [
+        25565
+    ]
+}

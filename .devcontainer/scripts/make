@@ -1,0 +1,27 @@
+#!/usr/bin/env python3
+
+import os
+import shutil
+import subprocess
+
+# Workdir path
+workdir = "/workspaces/bukkit-plugin"
+
+# Source path
+source = "/workspaces/bukkit-plugin/target/Exposed_ores-0.0.1-SNAPSHOT.jar"
+ 
+# Plugin path
+plugin = '/workspaces/bukkit-plugin/server/plugins/'
+
+# Destination path
+destination = "/workspaces/bukkit-plugin/server/plugins/Exposed_ores-0.0.1-SNAPSHOT.jar"
+
+os.chdir(workdir)
+
+subprocess.run(['mvn', 'clean', 'install'])
+
+# Create plugin folder
+if not os.path.exists(plugin):
+    os.makedirs(plugin)
+
+shutil.copyfile(source, destination)

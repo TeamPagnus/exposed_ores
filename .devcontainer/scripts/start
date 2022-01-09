@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+
+import os
+from urllib.request import Request, urlopen
+import subprocess
+
+# Workdir path
+workdir = "/workspaces/bukkit-plugin"
+
+# Server path
+serverDir = "/workspaces/bukkit-plugin/server"
+
+# Server path
+serverFile = "/workspaces/bukkit-plugin/server/server.jar"
+
+# World path
+world = '/workspaces/bukkit-plugin/server/world'
+
+# Create server folder if don't exists
+if not os.path.exists(serverDir):
+    os.makedirs(serverDir)
+
+# Change to workdir
+os.chdir(serverDir)
+
+# Remove actual world
+if os.path.exists(world):
+    subprocess.run(['rm', '-rf', world])
+
+# Download server
+if not os.path.exists(serverFile):
+    subprocess.run(['curl', 'https://download.getbukkit.org/craftbukkit/craftbukkit-1.18.1.jar', '-o', serverFile])
+
+# Accept eula
+if not os.path.exists("eula.txt"):
+    f = open("eula.txt", "a")
+    f.write("eula=true")
+    f.close()
+
+# Run server
+server_cmd = 'java -Xmx1024M -Xms1024M -jar server.jar nogui'
+subprocess.run(['tmux', 'new-session', '-d', '-s', 'server', server_cmd])
+
+# Show attach command
+print('to attatch:')
+print('> tmux attach -t server')
