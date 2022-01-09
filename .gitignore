@@ -1,5 +1,14 @@
+/build
+/bin
+
+/.gradle
+/.vscode
+
+/*.zip
+target/
+server/
 .settings/
 .target/
 .classpath
 .project
-target/
+
