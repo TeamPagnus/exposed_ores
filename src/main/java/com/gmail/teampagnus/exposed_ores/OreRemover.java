@@ -27,13 +27,9 @@ public final class OreRemover implements Listener {
 	@EventHandler()
 	public void onChunkPopulate(ChunkPopulateEvent event) {
 		Chunk chunk = event.getChunk();
-		ArrayList<Block> waterList = findBlocks(chunk, Material.LAVA);
-		ArrayList<Block> lavaList = findBlocks(chunk, Material.WATER);
-		for (Block block : waterList) {
+		ArrayList<Block> blockList = findBlocks(chunk, Material.WATER);
+		for (Block block : blockList) {
 			block.setType(Material.LAVA, false);
-		}
-		for (Block block : lavaList) {
-			block.setType(Material.WATER, false);
 		}
 	}
 }
