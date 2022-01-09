@@ -11,6 +11,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.World;
 
 public final class Exposed_ores extends JavaPlugin implements Listener {
+	// @Override
+	// public void onEnable() {
+    //     getServer().getPluginManager().registerEvents(new ChunkPopulateListener(), this);
+	// }
+
     @Override
     public void onEnable() {
         getCommand("sayhello").setExecutor((sender, command, label, args) -> SayHelloCommand(sender, command, label, args));
@@ -29,3 +34,4 @@ public final class Exposed_ores extends JavaPlugin implements Listener {
         world.getPopulators().add(new MoonCraterPopulator());
     }
 }
+

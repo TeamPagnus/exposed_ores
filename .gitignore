@@ -1,10 +1,14 @@
 /build
 /bin
-/.classpath
-/.project
+
 /.gradle
 /.vscode
-/.settings
+
 /*.zip
 target/
 server/
+.settings/
+.target/
+.classpath
+.project
+
