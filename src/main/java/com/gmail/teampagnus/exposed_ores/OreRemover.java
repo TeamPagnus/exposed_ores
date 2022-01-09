@@ -5,31 +5,20 @@ import java.util.ArrayList;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.world.ChunkPopulateEvent;
 
-public final class OreRemover implements Listener {
-	private ArrayList<Block> findBlocks(Chunk chunk, Material material) {
-		ArrayList<Block> blockList = new ArrayList<Block>();
-		for (int x = 0; x < 16; x++) {
-			for (int z = 0; z < 16; z++) {
-				for (int y = 0; y < 256; y++) {
-					Block block = chunk.getBlock(x, y, z);
-					if (chunk.getBlock(x, y, z).getType().equals(material))
-						blockList.add(block);
-				}
-			}
-		}
-		return blockList;
+class ValidOre {
+	static Block block;
+	static Boolean isValid;
+}
+
+public class OreRemover {
+	public static ArrayList<ValidOre> getOresInChunk(Chunk chunk) {
+		return new ArrayList<ValidOre>();
 	}
-
-	@EventHandler()
-	public void onChunkPopulate(ChunkPopulateEvent event) {
-		Chunk chunk = event.getChunk();
-		ArrayList<Block> blockList = findBlocks(chunk, Material.WATER);
-		for (Block block : blockList) {
-			block.setType(Material.LAVA, false);
+	
+	public static void replace(Chunk chunk) {
+		for (int y = 1; y * 16 < 256; y++) {
+			chunk.getBlock(0, y * 16, 0).setType(Material.OBSIDIAN, false);
 		}
 	}
 }
