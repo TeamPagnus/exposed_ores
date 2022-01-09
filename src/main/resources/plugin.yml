@@ -1,6 +1,7 @@
 name: Exposed_ores
 main: com.gmail.teampagnus.exposed_ores.Exposed_ores
 version: 0.1
+
 load: startup
 
 commands:

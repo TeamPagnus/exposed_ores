@@ -8,6 +8,7 @@
         "redhat.java",
         "vscjava.vscode-java-test",
         "vscjava.vscode-maven",
+        "visualstudioexptteam.vscodeintellicode",
         "mutantdino.resourcemonitor"
     ],
     "forwardPorts": [
