@@ -9,7 +9,8 @@
         "vscjava.vscode-java-test",
         "vscjava.vscode-maven",
         "visualstudioexptteam.vscodeintellicode",
-        "mutantdino.resourcemonitor"
+        "mutantdino.resourcemonitor",
+        "hyunkyunmoon.gzipdecompressor"
     ],
     "forwardPorts": [
         25565

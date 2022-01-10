@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.World;
 
+
 public final class Exposed_ores extends JavaPlugin implements Listener {
 	// @Override
 	// public void onEnable() {
