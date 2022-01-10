@@ -33,6 +33,11 @@ public final class Exposed_ores extends JavaPlugin implements Listener {
         getLogger().info("world init triggered");
         World world = e.getWorld();
         world.getPopulators().add(new MoonCraterPopulator());
+
+// public final class Exposed_ores extends JavaPlugin {
+//     @Override
+//     public void onEnable() {
+//          getServer().getPluginManager().registerEvents(new WorldInitListener(), this);
     }
 }
 

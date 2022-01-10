@@ -4,92 +4,140 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
-class DesiredBlock {
-	public Block block;
-	public Boolean isDesired;
-	
-	public DesiredBlock(Block block, Boolean isDesired) {
-		this.block = block;
-		this.isDesired = isDesired;
-	}
-}
-
 public class OreRemover {
-	public static void getOresInChunk(ArrayList<DesiredBlock> desiredBlockList, Chunk chunk, ArrayList<Material> materialList) {
-		int maxHeight = chunk.getWorld().getMaxHeight();
-		int minHeight = chunk.getWorld().getMinHeight();
-		for (int x = 0; x < 16; x++) {
-			for (int z = 0; z < 16; z++) {
-				for (int y = minHeight; y < maxHeight; y++) {
-					Block block = chunk.getBlock(x, y, z);
-					if (materialList.contains(block.getType()));
-						desiredBlockList.add(new DesiredBlock(block, false));
+	private static ArrayList<Material> materialList = new ArrayList<Material>(
+		Arrays.asList(
+			Material.COAL_ORE,
+			Material.COPPER_ORE,
+			Material.LAPIS_ORE,
+			Material.IRON_ORE,
+			Material.REDSTONE_ORE,
+			Material.DIAMOND_ORE,
+			Material.GOLD_ORE,
+			Material.EMERALD_ORE,
+			Material.DEEPSLATE_COAL_ORE,
+			Material.DEEPSLATE_COPPER_ORE,
+			Material.DEEPSLATE_LAPIS_ORE,
+			Material.DEEPSLATE_IRON_ORE,
+			Material.DEEPSLATE_REDSTONE_ORE,
+			Material.DEEPSLATE_DIAMOND_ORE,
+			Material.DEEPSLATE_GOLD_ORE,
+			Material.DEEPSLATE_EMERALD_ORE
+		)
+	);
+	
+	private static ArrayList<Material> validatorList = new ArrayList<Material>(
+		Arrays.asList(
+			Material.AIR,
+			Material.WATER
+		)
+	);
+
+	private static void validate(int coords[], Chunk chunk, ArrayList<Block> validBlockList,
+			ArrayList<Material> materialList, int minHeight, int maxHeight) {
+		if (coords[0] < 16 - 1) {
+			int neighborCoords[] = coords.clone();
+			neighborCoords[0]++;
+			Block neighborBlock = chunk.getBlock(neighborCoords[0], neighborCoords[1], neighborCoords[2]);
+			if (!validBlockList.contains(neighborBlock)) {
+				if (materialList.contains(neighborBlock.getType())) {
+					validBlockList.add(neighborBlock);
+					validate(neighborCoords, chunk, validBlockList, materialList, minHeight, maxHeight);
+				}
+			}
+		}
+		if (coords[0] > 0) {
+			int neighborCoords[] = coords.clone();
+			neighborCoords[0]--;
+			Block neighborBlock = chunk.getBlock(neighborCoords[0], neighborCoords[1], neighborCoords[2]);
+			if (!validBlockList.contains(neighborBlock)) {
+				if (materialList.contains(neighborBlock.getType())) {
+					validBlockList.add(neighborBlock);
+					validate(neighborCoords, chunk, validBlockList, materialList, minHeight, maxHeight);
+				}
+			}
+		}
+		if (coords[1] < maxHeight - 1) {
+			int neighborCoords[] = coords.clone();
+			neighborCoords[1]++;
+			Block neighborBlock = chunk.getBlock(neighborCoords[0], neighborCoords[1], neighborCoords[2]);
+			if (!validBlockList.contains(neighborBlock)) {
+				if (materialList.contains(neighborBlock.getType())) {
+					validBlockList.add(neighborBlock);
+					validate(neighborCoords, chunk, validBlockList, materialList, minHeight, maxHeight);
+				}
+			}
+		}
+		if (coords[1] > minHeight) {
+			int neighborCoords[] = coords.clone();
+			neighborCoords[1]--;
+			Block neighborBlock = chunk.getBlock(neighborCoords[0], neighborCoords[1], neighborCoords[2]);
+			if (!validBlockList.contains(neighborBlock)) {
+				if (materialList.contains(neighborBlock.getType())) {
+					validBlockList.add(neighborBlock);
+					validate(neighborCoords, chunk, validBlockList, materialList, minHeight, maxHeight);
+				}
+			}
+		}
+		if (coords[2] < 16 - 1) {
+			int neighborCoords[] = coords.clone();
+			neighborCoords[2]++;
+			Block neighborBlock = chunk.getBlock(neighborCoords[0], neighborCoords[1], neighborCoords[2]);
+			if (!validBlockList.contains(neighborBlock)) {
+				if (materialList.contains(neighborBlock.getType())) {
+					validBlockList.add(neighborBlock);
+					validate(neighborCoords, chunk, validBlockList, materialList, minHeight, maxHeight);
+				}
+			}
+		}
+		if (coords[2] > 0) {
+			int neighborCoords[] = coords.clone();
+			neighborCoords[2]--;
+			Block neighborBlock = chunk.getBlock(neighborCoords[0], neighborCoords[1], neighborCoords[2]);
+			if (!validBlockList.contains(neighborBlock)) {
+				if (materialList.contains(neighborBlock.getType())) {
+					validBlockList.add(neighborBlock);
+					validate(neighborCoords, chunk, validBlockList, materialList, minHeight, maxHeight);
 				}
 			}
 		}
 	}
 
-	public static Boolean oreHasExposedNeighbor(DesiredBlock db, Chunk ch){
-		return true;
-	}
-
-	public static Boolean updateExposedOres(ArrayList<DesiredBlock> desiredBlockList, Chunk chunk){
-		Boolean someChange = false;
-		for (int i = 0; i < desiredBlockList.size(); i++){
-			DesiredBlock db = desiredBlockList.get(i);
-			someChange = someChange || oreHasExposedNeighbor(db, chunk);
-		}
-		return someChange;
-	}
-
-	public static void oreRemoverReplacement(ArrayList<DesiredBlock> desiredBlockList, Material dest){
-		for (int i = 0; i < desiredBlockList.size(); i++){
-			DesiredBlock db = desiredBlockList.get(i);
-			if (!db.isDesired){
-				db.block.setType(dest, false);
+	public static void main(Chunk chunk) {
+		int maxHeight = chunk.getWorld().getMaxHeight();
+		int minHeight = chunk.getWorld().getMinHeight();
+		ArrayList<Block> blockList = new ArrayList<Block>();
+		ArrayList<Block> validBlockList = new ArrayList<Block>();
+		for (int x = 0; x < 16; x++) {
+			for (int z = 0; z < 16; z++) {
+				for (int y = minHeight; y < maxHeight; y++) {
+					Block block = chunk.getBlock(x, y, z);
+					if (materialList.contains(block.getType())) {
+						blockList.add(block);
+					}
+					else if (validatorList.contains(block.getType())) {
+						int coords[] = new int[3];
+						coords[0] = x;
+						coords[1] = y;
+						coords[2] = z;
+						OreRemover.validate(coords, chunk, validBlockList, materialList, minHeight, maxHeight);
+					}
+				}
 			}
 		}
-	}
-
-	private static int MAX_UPDATES = 100;
-	private static ArrayList<Material> materialList = new ArrayList<Material>(Arrays.asList(Material.REDSTONE_ORE, Material.COAL_ORE, Material.GOLD_ORE, Material.IRON_ORE, Material.DIAMOND_ORE));
-
-	public static void main(World world, Random random, Chunk source){
-		ArrayList<DesiredBlock> desiredBlockList = new ArrayList<DesiredBlock>();
-		OreRemover.getOresInChunk(desiredBlockList, source, materialList);
-		for (int i = 0; i < MAX_UPDATES; i++){
-			if (OreRemover.updateExposedOres(desiredBlockList, source)){
-				i = MAX_UPDATES;
+		int blocksChanged = 0;
+		for (Block block : blockList) {
+			if (!validBlockList.contains(block)) {
+				block.setType(Material.DIAMOND_BLOCK, false);
+				blocksChanged++;
 			}
 		}
-		OreRemover.oreRemoverReplacement(desiredBlockList, Material.STONE);
-	}
-
-	public static void mainOnlyOres(World world, Random random, Chunk source){
-		int maxHeight = source.getWorld().getMaxHeight();
-		int minHeight = source.getWorld().getMinHeight();
-
-        for (int x = 0; x < 16; x++) {
-            for (int y = minHeight; y < maxHeight; y++) {
-                for (int z = 0; z < 16; z++) {
-                    Block b = source.getBlock(x, y, z);
-                    if (!b.getType().name().endsWith("_ORE"))
-                    {
-                        b.setType(Material.AIR, false);
-                    }
-                }
-            }
-        }
-	}
-
-	public static void replace(Chunk chunk) {
-		for (int y = 1; y * 16 < 256; y++) {
-			chunk.getBlock(0, y * 16, 0).setType(Material.OBSIDIAN, false);
-		}
+		Bukkit.broadcastMessage("" + blocksChanged + " blocks replaced.");
 	}
 }

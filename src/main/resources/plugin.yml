@@ -7,4 +7,3 @@ commands:
   sayhello:
     description: Says hello
     usage: /sayhello
-
