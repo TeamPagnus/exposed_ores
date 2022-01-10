@@ -10,7 +10,11 @@ public class WorldInitListener implements Listener {
 	@EventHandler()
 	public void onWorldInit(WorldInitEvent event) {
 		World world = event.getWorld();
-		world.getPopulators().add(new CustomPopulator());
+
+		// this is best that any precompilator flag:
+		// world.getPopulators().add(new CustomPopulator());
+		world.getPopulators().add(new CustomMoonPopulator());
+
 		Chunk[] firstChunks = world.getLoadedChunks();
 		for (Chunk chunk : firstChunks) {
 			OreRemover.main(chunk);

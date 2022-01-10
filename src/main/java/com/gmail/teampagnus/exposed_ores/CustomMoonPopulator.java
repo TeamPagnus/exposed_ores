@@ -11,8 +11,7 @@ import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.generator.BlockPopulator;
 
-public class MoonCraterPopulator extends BlockPopulator {
-
+public class CustomMoonPopulator extends BlockPopulator {
     private int maxHeight = 0;
     private int minHeight = 0;
 
